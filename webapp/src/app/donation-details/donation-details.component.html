@@ -1,0 +1,109 @@
+<div class="row justify-content-center mt-3">
+    <div class="col-12 col-md-6 col-lg-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="page-title">
+                    <h3>Blood Donation Form</h3>
+                </div>
+                <form [formGroup]="donationForm" (ngSubmit)="onSubmit()">
+                    <div class="alert alert-success" *ngIf="success">
+                        Donation Details saved successfully
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-6">
+                            <div class="form-group">
+                                <label for="bloodGroupDetails">Select Blood Group</label>
+                                <select class="form-control" id="bloodGroupDetails" formControlName="bloodGroup">
+                                    <option value="" selected disabled>Please Select Blood Group</option>
+                                    <option *ngFor="let bloodGroup of bloodGroupList" [ngValue]="bloodGroup">
+                                        {{bloodGroup.name}}
+                                    </option>
+                                </select>
+                                <div class="validation-error"
+                                    *ngIf="donationForm.get('bloodGroup').touched && donationForm.get('bloodGroup').hasError('required')">
+                                    Blood Group is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="form-group">
+                                <label for="stateDetails">Select State</label>
+                                <select class="form-control" id="state" formControlName="state" (change)="getCities()">
+                                    <option value="" Selected disabled>Please Select State</option>
+                                    <option *ngFor="let state of statesList" [ngValue]="state">
+                                        {{state.name}}
+                                    </option>
+                                </select>
+                                <div class="validation-error"
+                                    *ngIf="donationForm.get('state').touched && donationForm.get('state').hasError('required')">
+                                    State is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="form-group" *ngIf="stateSelected">
+                                <label for="cityDetails">Select City</label>
+                                <select class="form-control" id="city" formControlName="city" (change)="getAreas()">
+                                    <option value="" Selected disabled>Please Select City</option>
+                                    <option *ngFor="let city of citiesList" [ngValue]="city">
+                                        {{city.name}}
+                                    </option>
+                                </select>
+                                <div class="validation-error"
+                                    *ngIf="donationForm.get('city').touched && donationForm.get('city').hasError('required')">
+                                    City is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="form-group" *ngIf="citySelected">
+                                <label for="areaDetails">Select Area</label>
+                                <select class="form-control" id="area" formControlName="area">
+                                    <option value="" Selected disabled>Please Select Area</option>
+                                    <option *ngFor="let area of areaList" [ngValue]="area">
+                                        {{area.name}}
+                                    </option>
+                                </select>
+                                <div class="validation-error"
+                                    *ngIf="donationForm.get('area').touched && donationForm.get('area').hasError('required')">
+                                    Area is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactNumber">Contact Number</label>
+                        <input type="text" formControlName="contactNumber" class="form-control"
+                            placeholder="Enter Contact Number">
+                        <div class="validation-error"
+                            *ngIf="donationForm.get('contactNumber').touched && donationForm.get('contactNumber').hasError('required')">
+                            Contact Number is required
+                        </div>
+                        <div class="validation-error"
+                            *ngIf="donationForm.get('contactNumber').touched && donationForm.get('contactNumber').hasError('maxlength')">
+                            Please Enter Correct Contact Number
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="units">Units</label>
+                        <input type="text" formControlName="units" class="form-control" placeholder="Enter Units">
+                        <div class="validation-error"
+                            *ngIf="donationForm.get('units').touched && donationForm.get('units').hasError('required')">
+                            Units is required
+                        </div>
+                        <div class="validation-error"
+                            *ngIf="donationForm.get('units').touched && donationForm.get('units').hasError('max')">
+                            Maximum you can donate 2 units
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <button type="submit" [disabled]="!donationForm.valid"
+                                class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

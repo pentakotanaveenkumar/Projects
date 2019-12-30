@@ -1,0 +1,112 @@
+<div class="row justify-content-center mt-3">
+    <div class="col-12 col-md-6 col-lg-5 mt-3">
+        <div class="card">
+            <div class="card-header">
+                <div class="page-title">
+                    <h3>Slot Booking Form</h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-success" *ngIf="submitted">
+                    Slot Booked Successfully
+                    <div class="div mt-3">
+                        <!-- Button trigger modal -->
+                        Do you want give FeedBack
+                        <button type="button" class="btn btn-primary mr-3 ml-3" data-toggle="modal"
+                            data-target="#exampleModalCenter">
+                            Yes
+                        </button>
+                        <a routerLink="/"><button type="button" class="btn btn-primary">
+                                No
+                            </button></a>
+                    </div>
+                </div>
+                <form [formGroup]="donorHospitalForm" (ngSubmit)="onSubmit()" *ngIf="!submitted">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-6">
+                            <div class="form-group">
+                                <label for="hospitalName">Hospital Name</label>
+                                <select class="form-control" id="hospital" formControlName="hospital">
+                                    <option value="" Selected disabled>Please Select Hospital</option>
+                                    <option *ngFor="let hospital of hospitalsList" [ngValue]="hospital">
+                                        {{hospital.name}}
+                                    </option>
+                                </select>
+                                <div class="validation-error"
+                                    *ngIf="donorHospitalForm.get('hospital').touched && donorHospitalForm.get('hospital').hasError('required')">
+                                    Hospital is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="form-group">
+                                <label for="donationDate">Date of Donation</label>
+                                <!--<input type="date" class="form-control" formControlName="donationDate">-->
+                                <input class="form-control m-input pl-6" type="date" [min]="todayDate" [max]="endDate"
+                                    formControlName="donationDate">
+                                <div class="validation-error"
+                                    *ngIf="donorHospitalForm.get('donationDate').touched && donorHospitalForm.get('donationDate').hasError('required')">
+                                    Date of Donation is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="form-group">
+                                <label for="donationTime">Time Slot</label>
+                                <select class="form-control" id="timeSlot" formControlName="donationTime">
+                                    <option value="" Selected disabled>Please Select Time Slot</option>
+                                    <option value="9am-10am"> 9am-10am </option>
+                                    <option value="10am-11am"> 10am-11am </option>
+                                    <option value="11am-12pm"> 11am-12pm </option>
+                                </select>
+                                <div class="validation-error"
+                                    *ngIf="donorHospitalForm.get('donationTime').touched && donorHospitalForm.get('donationTime').hasError('required')">
+                                    Time Slot is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <button type="submit" [disabled]="!donorHospitalForm.valid"
+                                class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Feedback</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-success" *ngIf="feedbackSubmit">feedback submitted</div>
+                        <form [formGroup]="feedBackForm" *ngIf="!feedbackSubmit">
+                            <div class="form-group">
+                                <label for="feedback">Feedback</label>
+                                <textarea type="textArea" rows="5" formControlName="feedback" class="form-control"
+                                    placeholder="Enter Feedback"></textarea>
+                                <div class="validation-error"
+                                    *ngIf="feedBackForm.get('feedback').touched && feedBackForm.get('feedback').hasError('required')">
+                                    Feedback is required
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer" *ngIf="!feedbackSubmit">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" (click)="onSubmitFeedback()">Send message</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

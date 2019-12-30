@@ -1,0 +1,10 @@
+.validation-error{
+    color:red;
+}
+input.ng-touched.ng-invalid{
+    border:solid 2px red;
+}
+
+.form-group .required .control-label:after {
+    content:"*";color:red;
+  }

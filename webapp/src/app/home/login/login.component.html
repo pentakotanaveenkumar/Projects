@@ -1,0 +1,43 @@
+<div class="row justify-content-center mt-3">
+  <div class="col-12 col-md-4 col-lg-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="page-title">
+          <h3>Login</h3>
+        </div>
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+          <div class="alert alert-danger" *ngIf="this.authService.inValidUser">
+            Invaild Username/Password
+          </div>
+          <div class="alert alert-danger" *ngIf="authSource">
+            Please Login Before Registration
+          </div>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input class="form-control" type="text" placeholder="Enter Username" ngModel #username="ngModel"
+              name="username" required>
+            <div class="validation-error" *ngIf="username.touched && username.hasError('required')">Username is
+              Required
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" ngModel #password="ngModel" placeholder="Enter Password"
+              name="password" required>
+            <div class="validation-error" *ngIf="password.touched && password.hasError('required')">Password is
+              Required
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary">Login</button>
+            </div>
+            <div class="col-8">
+              New User ? <a routerLink="/signUp">SignUp</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<div class="container">
+    <div class="alert alert-success mt-3" *ngIf="success">Question posted Successfully</div>
+    <div class="alert alert-success mt-3" *ngIf="posted">Answer posted Successfully</div>
+    <div class="card mt-3" *ngIf="!success">
+        <div class="card-header">
+            <h4>FAQs</h4>
+        </div>
+        <div class="card-body">
+            <div class="row" *ngIf="isAdmin">
+                <div class="col-12">
+                    <div class="alert alert-secondary" *ngIf="nodata">
+                        No Questions to Answer
+                    </div>
+                </div>
+                <div class="col-12 mt-3" *ngFor="let unAnsweredFaq of  unAnsweredFaqs">
+                    {{unAnsweredFaq.question}}
+                    <div class="col-12">
+                        <form [formGroup]="faqsForm" (ngSubmit)="onSubmit(unAnsweredFaq.id)">
+                            <div class="form-group">
+                                <label for="answer">Answer</label>
+                                <textarea type="textArea" rows="5" formControlName="answer" class="form-control"
+                                    placeholder="Enter Answer" name="answer"></textarea>
+                                <!-- <div class="validation-error"
+                                    *ngIf="faqsForm.get('answer').touched && faqsForm.get('answer').hasError('required')">
+                                    Answer is required
+                                </div>-->
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-primary">Post</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="!isAdmin">
+                <div class="col-12 mt-3" *ngFor="let answeredFaq of  answeredFaqs ">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="col-12">
+                                {{answeredFaq.question}}
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-12">
+                                {{answeredFaq.answer}}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-12 mt-3">
+                    <form [formGroup]="faqsQuestionForm" (ngSubmit)="onPost()">
+                        <div class="form-group">
+                            <label for="question">Question</label>
+                            <textarea rows="5" formControlName="question" class="form-control"
+                                placeholder="Enter Question"></textarea>
+                            <div class="validation-error"
+                                *ngIf="faqsQuestionForm.get('question').touched && faqsQuestionForm.get('question').hasError('required')">
+                                Question is required
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <button type="submit" [disabled]="!faqsQuestionForm.valid"
+                                    class="btn btn-primary">Post</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

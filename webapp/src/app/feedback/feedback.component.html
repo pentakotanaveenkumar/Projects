@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-3">
+                <div class="card-header">
+                    Feedback
+                </div>
+                <div class="card-body">
+                    <div class="card mb-3" *ngFor="let feedback of feedbackDetails">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-12">
+                                    {{feedback.user.firstName}} {{feedback.user.lastName}}
+                                </div>
+                                <!--<div class="col-6 float-right">
+                                    {{feedback.date}}
+                                </div>-->
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            {{feedback.feedback}}
+                        </div>
+                    </div>
+                </div>
+            </div>          
+        </div>
+    </div>
+</div>
